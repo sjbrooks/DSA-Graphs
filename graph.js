@@ -15,7 +15,7 @@ class Graph {
     this.nodes = new Set();
   }
 
-  /** add Node instance and add it to nodes property on graph. */  
+  /** add Node instance and add it to nodes property on graph. */
   addVertex(vertex) {
     this.nodes.add(vertex);
   }
@@ -30,8 +30,8 @@ class Graph {
     v1.adjacent.add(v2);
     v2.adjacent.add(v1);
   }
-  
-  /** remove edge between vertices v1,v2 */  
+
+  /** remove edge between vertices v1,v2 */
   removeEdge(v1, v2) {
     v1.adjacent.delete(v2);
     v2.adjacent.delete(v1);
@@ -41,7 +41,7 @@ class Graph {
    *
    * - remove it from nodes property of graph
    * - update any adjacency lists using that vertex
-   */   
+   */
   removeVertex(vertex) {
     this.nodes.delete(vertex);
     for (let node of this.nodes) {
@@ -51,13 +51,28 @@ class Graph {
     }
   }
 
-  /** traverse graph with DFS and returns array of Node values */  
+  /** traverse graph with DFS and returns array of Node values */
   depthFirstSearch(start) {
-    
+    let toVisitStack = [start]
+    let seen = new Set([start]);
+    let visitedVertices = [];
+
+    while (toVisitStack.length) {
+      let current = toVisitStack.pop();
+      visitedVertices.push(String(current.value));
+
+      for (let neighbor of current.adjacent) {
+        if (!seen.has(neighbor)) {
+          toVisitStack.push(neighbor);
+          seen.add(neighbor);
+        }
+      }
+    }
+    return visitedVertices;
   }
 
   /** traverse graph with BDS and returns array of Node values */
-  breadthFirstSearch(start) {}
+  breadthFirstSearch(start) { }
 }
 
-module.exports = {Graph, Node}
+module.exports = { Graph, Node }

@@ -72,7 +72,24 @@ class Graph {
   }
 
   /** traverse graph with BDS and returns array of Node values */
-  breadthFirstSearch(start) { }
+  breadthFirstSearch(start) {
+    let toVisitQueue = [start]
+    let seen = new Set([start]);
+    let visitedVertices = [];
+
+    while (toVisitQueue.length) {
+      let current = toVisitQueue.shift();
+      visitedVertices.push(String(current.value));
+
+      for (let neighbor of current.adjacent) {
+        if (!seen.has(neighbor)) {
+          toVisitQueue.push(neighbor);
+          seen.add(neighbor);
+        }
+      }
+    }
+    return visitedVertices;
+  }
 }
 
 module.exports = { Graph, Node }
